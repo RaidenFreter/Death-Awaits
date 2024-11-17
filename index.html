@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTC+08">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Your Eyes</title>
+    <title>Countdown to December 8, 2024</title>
     
     <style>
         body {
@@ -36,6 +36,11 @@
             margin-top: 20px;
             font-style: italic;
         }
+        .message {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +53,8 @@
 
 <script>
     function updateCountdown() {
-        const targetDate = new Date("December 8, 2024 00:00:00").getTime();
+        // Set target date to December 8, 2024, 00:00:00 Philippine Time (PHT)
+        const targetDate = new Date("December 8, 2024 00:00:00 GMT+0800").getTime();
         const now = new Date().getTime();
         const distance = targetDate - now;
 
