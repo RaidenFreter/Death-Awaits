@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to December 8, 2024</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #4d4d4d;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .countdown {
+            font-size: 2rem;
+            margin: 20px;
+        }
+        .countdown span {
+            display: block;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="countdown">
+    <div>Time remaining until:</div>
+    <span id="timer">Loading...</span>
+</div>
+
+<script>
+    function updateCountdown() {
+        const targetDate = new Date("December 8, 2024 00:00:00").getTime();
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+            document.getElementById("timer").innerHTML = "Event has started!";
+        } else {
+            document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // initial call
+</script>
+
+</body>
+</html>
