@@ -15,7 +15,7 @@
             color: #ffffff;
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('https://i.pinimg.com/736x/d7/38/d5/d738d5a50c4a18e66b2c2871da8f4481.jpg'); /* Replace with your image URL */
+            background-image: url('https://example.com/your-static-background.jpg'); /* Replace with your image URL */
             background-size: cover;
             background-position: center;
         }
@@ -45,6 +45,11 @@
 </head>
 <body>
 
+<audio id="background-music" loop autoplay>
+    <source src="https://github.com/RaidenFreter/Death-Awaits/blob/main/videoplayback.m4a"> <!-- Replace with your music file URL -->
+    Your browser does not support the audio element.
+</audio>
+
 <div class="countdown">
     <div>Time remaining until:</div>
     <span id="timer">Loading...</span>
@@ -54,22 +59,29 @@
 <script>
     function updateCountdown() {
         // Set target date to December 8, 2024, 00:00:00 Philippine Time (PHT)
-        const targetDate = new Date("December 8, 2024 00:00:00 GMT+0800").getTime();
+        const targetDate = new Date("2024-12-08T00:00:00+08:00").getTime();
+        
+        // Get the current date in milliseconds
         const now = new Date().getTime();
+
+        // Calculate the distance
         const distance = targetDate - now;
 
+        // Time calculations for days, hours, minutes and seconds
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+        // Display the result in the timer element
         if (distance < 0) {
-            document.getElementById("timer").innerHTML = "Happy Birthday, Ryan Mark";
+            document.getElementById("timer").innerHTML = "Event has started!";
         } else {
             document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
     }
 
+    // Update the countdown every 1 second
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Initial call
 </script>
