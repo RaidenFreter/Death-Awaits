@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Open Your Eyes </title>
+    <title>Open Your Eyes</title>
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Open Your Eyes" />
-    <meta property="og:description" content="Death awaits." />
-    <meta property="og:image" content="https://i.ibb.co/996KJ01/pixil-gif-drawing-4.gif" />
-    <meta property="og:url" content="https://raidenfreter.github.io/RyanMark.github.io/" />
-    <meta property="og:type" content="website" />
-
     <style>
         body {
             display: flex;
@@ -19,14 +12,19 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #4d4d4d;
             color: #ffffff;
             font-family: Arial, sans-serif;
             text-align: center;
+            background-image: url('https://i.pinimg.com/736x/d7/38/d5/d738d5a50c4a18e66b2c2871da8f4481.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
         }
         .countdown {
             font-size: 2rem;
             margin: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Optional: background for better readability */
+            padding: 20px;
+            border-radius: 10px;
         }
         .countdown span {
             display: block;
@@ -67,7 +65,7 @@
     }
 
     setInterval(updateCountdown, 1000);
-    updateCountdown(); // initial call
+    updateCountdown(); // Initial call
 </script>
 
 </body>
