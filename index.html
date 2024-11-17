@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown to December 8, 2024</title>
+    <title> Open Your Eyes </title>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -24,6 +25,11 @@
             font-size: 3rem;
             font-weight: bold;
         }
+        .note {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -32,6 +38,7 @@
     <div>Time remaining until:</div>
     <span id="timer">Loading...</span>
 </div>
+<div class="note">Time waits for no one.</div>
 
 <script>
     function updateCountdown() {
