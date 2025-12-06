@@ -1,74 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Your Eyes</title>
-    
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-image: url('https://i.pinimg.com/736x/a6/7f/a4/a67fa4d8bcd093451e73ffa30868f418.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-        .countdown {
-            font-size: 2rem;
-            margin: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .countdown span {
-            display: block;
-            font-size: 3rem;
-            font-weight: bold;
-        }
-        .note {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            font-style: italic;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Open Your Eyes - Countdown</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-image: url('https://i.pinimg.com/736x/a6/7f/a4/a67fa4d8bcd093451e73ffa30868f418.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+    }
+    .countdown {
+      font-size: 1.25rem;
+      margin: 20px;
+      background: rgba(0,0,0,0.55);
+      padding: 20px 28px;
+      border-radius: 12px;
+      min-width: 300px;
+    }
+    .countdown .time {
+      display:block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .note {
+      font-size: 1rem;
+      margin-top: 18px;
+      font-style: italic;
+      opacity: 0.95;
+    }
+  </style>
 </head>
 <body>
 
-<audio id="background-music" loop autoplay preload="auto">
+  <audio id="background-music" loop preload="auto">
     <source src="https://raw.githubusercontent.com/RaidenFreter/Death-Awaits/main/videoplayback.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
-</audio>
+  </audio>
 
-<div class="countdown">
+  <div class="countdown">
     <div>Time remaining until:</div>
-    <span id="timer">Loading...</span>
-</div>
-<div class="note">Time waits for no one.</div>
+    <span class="time" id="timer">Loading...</span>
+  </div>
+  <div class="note">Time waits for no one.</div>
 
-<script>
-    function updateCountdown() {
-        // Target: December 8, 2025 00:00:00 Philippine Standard Time (UTC+8)
-        const targetDate = new Date("2025-12-08T00:00:00+08:00").getTime();
-        
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        // Build a timezone-robust target in UTC for: 2025-12-08 00:00:00 PHT (UTC+8)
+        // Convert that PHT time to its equivalent UTC timestamp:
+        // 2025-12-08 00:00 PHT == 2025-12-07 16:00 UTC
+        const targetUtcMs = Date.UTC(2025, 11, 7, 16, 0, 0); // month is 0-based: 11 = December
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const timerEl = document.getElementById('timer');
 
-        if (distance < 0) {
-            document.getElementById("timer").innerHTML = "Time's up.";
-        } else {
-            document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        function formatTimeParts(days, hours, minutes, seconds) {
+          return `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
-    }
 
-    setInterval(updateCountdown, 100
+        function updateCountdown() {
+          const nowMs = Date.now();
+          let distance = targetUtcMs - nowMs;
+
+          if (isNaN(distance)) {
+            // Defensive fallback if something is wrong with the target timestamp
+            timerEl.textContent = 'Error calculating time.';
+            clearInterval(tick);
+            return;
+          }
+
+          if (distance <= 0) {
+            // Countdown finished — show final message and stop updating
+            timerEl.textContent = "It's time.";
+            clearInterval(tick);
+
+            // OPTIONAL: extra end-of-timer actions (uncomment if desired)
+            // document.body.style.backgroundColor = '#000';
+            // document.body.innerHTML = '<h1 style="color:#fff">Open your eyes.</h1>';
+            // document.getElementById('background-music').pause();
+            return;
+          }
+
+          const secsTotal = Math.floor(distance / 1000);
+          const days = Math.floor(secsTotal / (60 * 60 * 24));
+          const hours = Math.floor((secsTotal % (60 * 60 * 24)) / (60 * 60));
+          const minutes = Math.floor((secsTotal % (60 * 60)) / 60);
+          const seconds = secsTotal % 60;
+
+          timerEl.textContent = formatTimeParts(days, hours, minutes, seconds);
+        }
+
+        // Run immediately then every second
+        updateCountdown();
+        const tick = setInterval(updateCountdown, 1000);
+
+      } catch (err) {
+        console.error('Countdown script error:', err);
+        const el = document.getElementById('timer');
+        if (el) el.textContent = 'An error occurred.';
+      }
+    });
+  </script>
+
+</body>
+</html>
